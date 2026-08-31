@@ -532,7 +532,6 @@ const clearSearchBtn    = document.getElementById('clearSearchBtn');
 const filterTagsContainer = document.getElementById('filterTags');
 const projectCountText  = document.getElementById('projectCountText');
 const reviewerModal     = document.getElementById('reviewerModal');
-const inputModal        = document.getElementById('inputModal');
 
 // ─── Init ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -763,150 +762,7 @@ function switchTab(tabId) {
         c.classList.toggle('active', c.id === tabId));
 }
 
-// ─── Input Modal ──────────────────────────────────────────────────────────────
-function openInputModal(projectIdToEdit = null) {
-    document.getElementById('projectInputForm').reset();
 
-    if (projectIdToEdit) {
-        const p = currentProjects.find(item => item.id === projectIdToEdit);
-        if (p) {
-            document.getElementById('inputModalHeading').innerText = 'Edit Project Details';
-            document.getElementById('inputProjectId').value  = p.id;
-            document.getElementById('inputTitle').value      = p.title;
-            document.getElementById('inputCategory').value   = p.category;
-            document.getElementById('inputTools').value      = p.tools.join(', ');
-            document.getElementById('inputPowerBiUrl').value = p.powerBiUrl;
-            document.getElementById('inputGithubUrl').value  = p.githubUrl || '';
-            document.getElementById('inputImage').value      = p.image;
-            document.getElementById('inputProblem').value    = p.problemStatement || '';
-            document.getElementById('inputInsights').value   = (p.insights || []).join('\n');
-            document.getElementById('inputDax').value        = p.daxCode || '';
-            document.getElementById('inputSql').value        = p.sqlCode || '';
-            document.getElementById('inputPbixUrl').value    = p.pbixUrl || '';
-            if (p.kpis?.[0]) document.getElementById('inputKpi1').value = `${p.kpis[0].label}: ${p.kpis[0].value}`;
-            if (p.kpis?.[1]) document.getElementById('inputKpi2').value = `${p.kpis[1].label}: ${p.kpis[1].value}`;
-        }
-    } else {
-        document.getElementById('inputModalHeading').innerText = 'Add New Power BI Project';
-        document.getElementById('inputProjectId').value = '';
-        // Pre-fill GitHub base so user just adds the sub-folder
-        document.getElementById('inputGithubUrl').value = GITHUB_BASE;
-    }
-    inputModal.style.display = 'flex';
-}
-
-// ─── Save Project ─────────────────────────────────────────────────────────────
-function handleSaveProject(e) {
-    e.preventDefault();
-    const get = id => document.getElementById(id).value.trim();
-
-    const projectId      = get('inputProjectId');
-    const title          = get('inputTitle');
-    const category       = get('inputCategory');
-    const tools          = get('inputTools').split(',').map(t => t.trim()).filter(Boolean);
-    const powerBiUrl     = get('inputPowerBiUrl');
-    const githubUrl      = get('inputGithubUrl');
-    const image          = get('inputImage');
-    const problemStatement = get('inputProblem');
-    const insights       = document.getElementById('inputInsights').value.trim().split('\n').map(i => i.trim()).filter(Boolean);
-    const daxCode        = document.getElementById('inputDax').value;
-    const sqlCode        = document.getElementById('inputSql').value;
-    const pbixUrl        = get('inputPbixUrl');
-
-    const parseKpi = id => {
-        const raw = get(id);
-        if (!raw.includes(':')) return null;
-        const [label, ...rest] = raw.split(':');
-        return { label: label.trim(), value: rest.join(':').trim() };
-    };
-    const kpis = [parseKpi('inputKpi1'), parseKpi('inputKpi2')].filter(Boolean);
-
-    if (projectId) {
-        const idx = currentProjects.findIndex(p => p.id === projectId);
-        if (idx !== -1) currentProjects[idx] = { ...currentProjects[idx], title, category, tools, powerBiUrl, githubUrl, image, problemStatement, insights, daxCode, sqlCode, pbixUrl, kpis };
-    } else {
-        currentProjects.unshift({
-            id: 'proj_' + Date.now(),
-            title, category, tools: tools.length ? tools : ['Power BI', 'DAX'],
-            image: image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-            powerBiUrl, githubUrl, pbixUrl, kpis, problemStatement, insights,
-            businessImpact: 'Operational insights and reporting optimisation.',
-            daxCode, sqlCode, reviews: []
-        });
-    }
-
-    saveProjectsToStorage();
-    inputModal.style.display = 'none';
-    renderApp();
-    showToast('Project saved successfully!');
-}
-
-// ─── Feedback ─────────────────────────────────────────────────────────────────
-function handleFeedbackSubmit(e) {
-    e.preventDefault();
-    if (!activeProjectModal) return;
-    const name     = document.getElementById('reviewerName').value.trim();
-    const rating   = parseInt(document.getElementById('reviewerRating').value);
-    const comments = document.getElementById('reviewerComments').value.trim();
-    if (!name || !comments) return;
-    if (!activeProjectModal.reviews) activeProjectModal.reviews = [];
-    activeProjectModal.reviews.unshift({ author: name, rating, text: comments });
-    saveProjectsToStorage();
-    renderReviews(activeProjectModal);
-    document.getElementById('feedbackForm').reset();
-    showToast('Thank you for your feedback!');
-}
-
-// ─── Toast ────────────────────────────────────────────────────────────────────
-function showToast(msg) {
-    const toast = document.getElementById('toast');
-    document.getElementById('toastMessage').innerText = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-// ─── Export / Import ──────────────────────────────────────────────────────────
-function exportDataJSON() {
-    const a = document.createElement('a');
-    a.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(currentProjects, null, 2)));
-    a.setAttribute('download', `Abraham_Oputa_Portfolio_Backup_${Date.now()}.json`);
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    showToast('Portfolio JSON exported!');
-}
-
-function importDataJSON(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        try {
-            const imported = JSON.parse(e.target.result);
-            if (Array.isArray(imported)) {
-                currentProjects = imported;
-                saveProjectsToStorage();
-                renderApp();
-                showToast('Portfolio imported successfully!');
-            } else {
-                alert('Invalid JSON: expected an array of projects.');
-            }
-        } catch { alert('Error parsing JSON file.'); }
-    };
-    reader.readAsText(file);
-}
-
-// ─── Local Image Upload ───────────────────────────────────────────────────────
-function handleLocalImageUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        document.getElementById('inputImage').value = e.target.result;
-        showToast('Image loaded! Save the project to apply it.');
-    };
-    reader.readAsDataURL(file);
-}
 
 // ─── Event Listeners ──────────────────────────────────────────────────────────
 function initEventListeners() {
@@ -938,15 +794,10 @@ function initEventListeners() {
         renderGrid();
     });
 
-    document.getElementById('btnOpenAddModal').addEventListener('click', () => openInputModal());
-    document.getElementById('footerAddBtn').addEventListener('click',  () => openInputModal());
     document.getElementById('closeReviewerModal').addEventListener('click', () => reviewerModal.style.display = 'none');
-    document.getElementById('closeInputModal').addEventListener('click',    () => inputModal.style.display   = 'none');
-    document.getElementById('cancelInputBtn').addEventListener('click',     () => inputModal.style.display   = 'none');
 
     window.addEventListener('click', e => {
         if (e.target === reviewerModal) reviewerModal.style.display = 'none';
-        if (e.target === inputModal)    inputModal.style.display    = 'none';
     });
 
     document.querySelectorAll('.tab-btn').forEach(btn =>
@@ -959,11 +810,7 @@ function initEventListeners() {
         })
     );
 
-    document.getElementById('inputImageFile').addEventListener('change', handleLocalImageUpload);
-    document.getElementById('projectInputForm').addEventListener('submit', handleSaveProject);
     document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackSubmit);
-    document.getElementById('btnExportData').addEventListener('click', exportDataJSON);
-    document.getElementById('fileImportJson').addEventListener('change', importDataJSON);
 
     document.getElementById('toggleFullscreenBtn').addEventListener('click', () => {
         const c = document.getElementById('iframeContainer');
