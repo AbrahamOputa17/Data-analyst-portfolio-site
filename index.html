@@ -72,14 +72,6 @@
                 </div>
                 <div class="metric-divider"></div>
                 <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-lightbulb"></i></div>
-                    <div class="metric-data">
-                        <span class="metric-value" id="statInsights">0+</span>
-                        <span class="metric-label">Actionable Insights</span>
-                    </div>
-                </div>
-                <div class="metric-divider"></div>
-                <div class="metric-card">
                     <div class="metric-icon"><i class="fas fa-database"></i></div>
                     <div class="metric-data">
                         <span class="metric-value" id="statDatasets">100%</span>
@@ -164,9 +156,6 @@
                     <h2 class="modal-project-title" id="modalTitle">Project Title</h2>
                 </div>
                 <div class="modal-header-actions">
-                    <a href="#" target="_blank" class="btn btn-powerbi" id="modalOpenAppBtn">
-                        <i class="fas fa-external-link-alt"></i> <span>Open in Power BI App</span>
-                    </a>
                     <button class="modal-close" id="closeReviewerModal"><i class="fas fa-times"></i></button>
                 </div>
             </div>
@@ -177,16 +166,13 @@
                     <i class="fas fa-desktop"></i> Power BI Dashboard
                 </button>
                 <button class="tab-btn" data-tab="tab-summary">
-                    <i class="fas fa-file-alt"></i> Executive Brief & Insights
+                    <i class="fas fa-file-alt"></i> Executive Brief
                 </button>
                 <button class="tab-btn" data-tab="tab-tech">
                     <i class="fas fa-code"></i> DAX & SQL Specs
                 </button>
                 <button class="tab-btn" data-tab="tab-files">
                     <i class="fas fa-folder"></i> Datasets & Files
-                </button>
-                <button class="tab-btn" data-tab="tab-feedback">
-                    <i class="fas fa-star"></i> Recruiter Feedback
                 </button>
             </div>
 
@@ -206,9 +192,6 @@
                                 <button class="btn btn-xs btn-secondary" id="toggleFullscreenBtn">
                                     <i class="fas fa-expand"></i> Fullscreen
                                 </button>
-                                <a href="#" target="_blank" class="btn btn-xs btn-primary" id="launchPowerBiDirectBtn">
-                                    <i class="fas fa-external-link-alt"></i> Launch Full App
-                                </a>
                             </div>
                         </div>
 
@@ -218,11 +201,8 @@
                                 <img src="" alt="Power BI Dashboard" id="modalPreviewImg">
                                 <div class="iframe-overlay">
                                     <div class="overlay-badge"><i class="fas fa-chart-bar"></i> Power BI Overview</div>
-                                    <h3>Interactive Report Visualization</h3>
-                                    <p>Click below to launch the full dynamic report directly in the Power BI Cloud Service or inspect the documentation specs.</p>
-                                    <a href="#" target="_blank" class="btn btn-powerbi btn-lg" id="placeholderAppBtn">
-                                        <i class="fas fa-play-circle"></i> Launch in Power BI App
-                                    </a>
+                                    <h3>Dashboard Screenshot Preview</h3>
+                                    <p>View the project details, DAX &amp; SQL code, and downloadable files using the tabs above.</p>
                                 </div>
                             </div>
                             <iframe id="powerBiIframe" src="" frameborder="0" allowFullScreen="true" style="display: none;"></iframe>
@@ -297,43 +277,6 @@
                         <h3 class="mt-4"><i class="fas fa-table"></i> Sample Data Table Preview</h3>
                         <div class="table-preview-wrapper" id="modalTableWrapper">
                             <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 5: RECRUITER FEEDBACK -->
-                <div class="tab-content" id="tab-feedback">
-                    <div class="feedback-container">
-                        <h3><i class="fas fa-comment-alt"></i> Leave Recruiter Review & Feedback</h3>
-                        <p class="text-sub">Reviewing this project for a Data Analytics or Business Intelligence role? Share your feedback or job opportunity details.</p>
-                        
-                        <form id="feedbackForm" class="feedback-form mt-3">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="reviewerName">Your Name / Company</label>
-                                    <input type="text" id="reviewerName" placeholder="e.g. Sarah Jenkins (Hiring Manager)" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="reviewerRole">Rating</label>
-                                    <select id="reviewerRating" class="form-control">
-                                        <option value="5">⭐⭐⭐⭐⭐ Exceptional (5/5)</option>
-                                        <option value="4">⭐⭐⭐⭐ Great Work (4/5)</option>
-                                        <option value="3">⭐⭐⭐ Good Analysis (3/5)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="reviewerComments">Feedback / Recommendations</label>
-                                <textarea id="reviewerComments" rows="4" placeholder="Share comments on dashboard layout, DAX logic, insights clarity, or potential opportunities..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit Review</button>
-                        </form>
-
-                        <div class="existing-reviews mt-4">
-                            <h4>Recent Reviews for this Project</h4>
-                            <div class="reviews-list" id="modalReviewsList">
-                                <p class="text-muted">No reviews submitted yet. Be the first to leave feedback!</p>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -542,13 +542,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
 function loadProjects() {
-    try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        currentProjects = saved ? JSON.parse(saved) : [...DEFAULT_PROJECTS];
-        if (!saved) saveProjectsToStorage();
-    } catch (e) {
-        currentProjects = [...DEFAULT_PROJECTS];
-    }
+    // Always use the latest DEFAULT_PROJECTS (clears any stale cached data)
+    currentProjects = [...DEFAULT_PROJECTS];
+    saveProjectsToStorage();
 }
 
 function saveProjectsToStorage() {
@@ -560,14 +556,15 @@ function saveProjectsToStorage() {
 function renderApp() { renderStats(); renderGrid(); }
 
 function renderStats() {
-    document.getElementById('statProjects').innerText = currentProjects.length;
-    let daxCount = 0, insightCount = 0;
+    const statProjects = document.getElementById('statProjects');
+    if (statProjects) statProjects.innerText = currentProjects.length;
+    
+    let daxCount = 0;
     currentProjects.forEach(p => {
         if (p.daxCode && p.daxCode.trim()) daxCount++;
-        if (p.insights) insightCount += p.insights.length;
     });
-    document.getElementById('statDax').innerText = daxCount;
-    document.getElementById('statInsights').innerText = insightCount + '+';
+    const statDax = document.getElementById('statDax');
+    if (statDax) statDax.innerText = daxCount;
 }
 
 function renderGrid() {
@@ -623,12 +620,9 @@ function renderGrid() {
                 <div class="card-tags">${toolsHtml}</div>
                 <div class="card-footer">
                     <button class="btn btn-outline btn-sm btn-review-card" data-id="${project.id}">
-                        <i class="fas fa-eye"></i> View Report & Docs
+                        <i class="fas fa-info-circle"></i> Project Details
                     </button>
                     ${githubBtn}
-                    <a href="${project.powerBiUrl}" target="_blank" class="btn btn-powerbi btn-sm">
-                        <i class="fas fa-external-link-alt"></i> Open App
-                    </a>
                 </div>
             </div>
         `;
@@ -645,26 +639,13 @@ function openReviewerModal(projectId) {
 
     document.getElementById('modalCategory').innerText = project.category;
     document.getElementById('modalTitle').innerText     = project.title;
-    document.getElementById('modalOpenAppBtn').href     = project.powerBiUrl;
-    document.getElementById('launchPowerBiDirectBtn').href = project.powerBiUrl;
-    document.getElementById('placeholderAppBtn').href   = project.powerBiUrl;
     document.getElementById('modalPreviewImg').src      = project.image;
 
+    // Always show the screenshot preview — no live iframe embed
     const powerBiIframe   = document.getElementById('powerBiIframe');
     const iframePlaceholder = document.getElementById('iframePlaceholder');
-    if (project.powerBiUrl.includes('app.powerbi.com/view')) {
-        let src = project.powerBiUrl;
-        if (src.includes('<iframe')) {
-            const m = src.match(/src=["']([^"']+)["']/);
-            if (m) src = m[1];
-        }
-        powerBiIframe.src   = src;
-        powerBiIframe.style.display = 'block';
-        iframePlaceholder.style.display = 'none';
-    } else {
-        powerBiIframe.style.display = 'none';
-        iframePlaceholder.style.display = 'block';
-    }
+    powerBiIframe.style.display = 'none';
+    iframePlaceholder.style.display = 'block';
 
     // KPIs
     const kpiContainer = document.getElementById('modalQuickKpis');
@@ -736,23 +717,8 @@ function openReviewerModal(projectId) {
             <i class="fas fa-external-link-alt"></i>
         </a>`;
 
-    renderReviews(project);
     switchTab('tab-dashboard');
     reviewerModal.style.display = 'flex';
-}
-
-function renderReviews(project) {
-    const list = document.getElementById('modalReviewsList');
-    list.innerHTML = (project.reviews && project.reviews.length)
-        ? project.reviews.map(r => `
-            <div class="review-item">
-                <div class="review-author">
-                    <span>${r.author}</span>
-                    <span class="review-stars">${'⭐'.repeat(r.rating || 5)}</span>
-                </div>
-                <div class="review-text">${r.text}</div>
-            </div>`).join('')
-        : '<p class="text-muted">No reviews yet. Be the first to leave feedback!</p>';
 }
 
 function switchTab(tabId) {
@@ -762,7 +728,15 @@ function switchTab(tabId) {
         c.classList.toggle('active', c.id === tabId));
 }
 
-
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    if (toast && toastMessage) {
+        toastMessage.innerText = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+}
 
 // ─── Event Listeners ──────────────────────────────────────────────────────────
 function initEventListeners() {
@@ -809,8 +783,6 @@ function initEventListeners() {
             showToast('Code copied to clipboard!');
         })
     );
-
-    document.getElementById('feedbackForm').addEventListener('submit', handleFeedbackSubmit);
 
     document.getElementById('toggleFullscreenBtn').addEventListener('click', () => {
         const c = document.getElementById('iframeContainer');
