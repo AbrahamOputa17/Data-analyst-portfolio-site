@@ -50,7 +50,7 @@
                 Transforming Raw Data Into <span class="gradient-text">Interactive Intelligence</span>
             </h1>
             <p class="hero-subtitle">
-                Explore end-to-end Data Science & Business Intelligence projects. Review live interactive <strong>Power BI dashboards</strong>, inspect raw <strong>DAX & SQL code</strong>, examine business problem statements, and download project datasets.
+                Explore end-to-end Data Science &amp; Business Intelligence projects. Review interactive <strong>Power BI dashboards</strong>, examine business problem statements, and download project datasets.
             </p>
 
             <!-- Metrics Strip -->
@@ -64,18 +64,10 @@
                 </div>
                 <div class="metric-divider"></div>
                 <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-code"></i></div>
-                    <div class="metric-data">
-                        <span class="metric-value" id="statDax">0</span>
-                        <span class="metric-label">DAX & SQL Models</span>
-                    </div>
-                </div>
-                <div class="metric-divider"></div>
-                <div class="metric-card">
                     <div class="metric-icon"><i class="fas fa-database"></i></div>
                     <div class="metric-data">
                         <span class="metric-value" id="statDatasets">100%</span>
-                        <span class="metric-label">Documented & Verifiable</span>
+                        <span class="metric-label">Documented &amp; Verifiable</span>
                     </div>
                 </div>
             </div>
@@ -88,7 +80,7 @@
             <!-- Search Bar -->
             <div class="search-box">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Search by dashboard title, DAX formula, SQL query, or insights..." autocomplete="off">
+                <input type="text" id="searchInput" placeholder="Search by dashboard title, category, or business domain..." autocomplete="off">
                 <button class="clear-search" id="clearSearchBtn" style="display: none;"><i class="fas fa-times"></i></button>
             </div>
 
@@ -96,9 +88,6 @@
             <div class="filter-tags" id="filterTags">
                 <button class="filter-btn active" data-filter="all">All Projects</button>
                 <button class="filter-btn" data-filter="Power BI">Power BI</button>
-                <button class="filter-btn" data-filter="DAX">DAX</button>
-                <button class="filter-btn" data-filter="SQL">SQL</button>
-                <button class="filter-btn" data-filter="Python">Python</button>
                 <button class="filter-btn" data-filter="Financial">Finance</button>
                 <button class="filter-btn" data-filter="E-Commerce">E-Commerce</button>
                 <button class="filter-btn" data-filter="Retail">Retail</button>
@@ -168,11 +157,8 @@
                 <button class="tab-btn" data-tab="tab-summary">
                     <i class="fas fa-file-alt"></i> Executive Brief
                 </button>
-                <button class="tab-btn" data-tab="tab-tech">
-                    <i class="fas fa-code"></i> DAX & SQL Specs
-                </button>
                 <button class="tab-btn" data-tab="tab-files">
-                    <i class="fas fa-folder"></i> Datasets & Files
+                    <i class="fas fa-folder"></i> Datasets &amp; Files
                 </button>
             </div>
 
@@ -235,33 +221,6 @@
                         <h3><i class="fas fa-cogs"></i> Business Impact & ROI</h3>
                         <div class="doc-box highlighted-box" id="modalImpactText">
                             <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 3: DAX & SQL SPECS -->
-                <div class="tab-content" id="tab-tech">
-                    <div class="tech-specs-container">
-                        <!-- DAX Measures Section -->
-                        <div class="code-block-wrapper">
-                            <div class="code-header">
-                                <span><i class="fas fa-calculator"></i> DAX Measures & Calculations</span>
-                                <button class="btn btn-xs btn-outline btn-copy" data-target="modalDaxCode">
-                                    <i class="fas fa-copy"></i> Copy DAX
-                                </button>
-                            </div>
-                            <pre class="code-content"><code id="modalDaxCode">// DAX Calculations</code></pre>
-                        </div>
-
-                        <!-- SQL Queries Section -->
-                        <div class="code-block-wrapper mt-4">
-                            <div class="code-header">
-                                <span><i class="fas fa-database"></i> SQL Data Extraction & Transformation</span>
-                                <button class="btn btn-xs btn-outline btn-copy" data-target="modalSqlCode">
-                                    <i class="fas fa-copy"></i> Copy SQL
-                                </button>
-                            </div>
-                            <pre class="code-content"><code id="modalSqlCode">-- SQL Queries</code></pre>
                         </div>
                     </div>
                 </div>

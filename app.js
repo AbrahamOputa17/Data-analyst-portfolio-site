@@ -558,13 +558,6 @@ function renderApp() { renderStats(); renderGrid(); }
 function renderStats() {
     const statProjects = document.getElementById('statProjects');
     if (statProjects) statProjects.innerText = currentProjects.length;
-    
-    let daxCount = 0;
-    currentProjects.forEach(p => {
-        if (p.daxCode && p.daxCode.trim()) daxCount++;
-    });
-    const statDax = document.getElementById('statDax');
-    if (statDax) statDax.innerText = daxCount;
 }
 
 function renderGrid() {
@@ -577,9 +570,7 @@ function renderGrid() {
             || p.title.toLowerCase().includes(q)
             || p.category.toLowerCase().includes(q)
             || (p.problemStatement || '').toLowerCase().includes(q)
-            || p.tools.some(t => t.toLowerCase().includes(q))
-            || (p.daxCode  && p.daxCode.toLowerCase().includes(q))
-            || (p.sqlCode  && p.sqlCode.toLowerCase().includes(q));
+            || p.tools.some(t => t.toLowerCase().includes(q));
         return matchesFilter && matchesSearch;
     });
 
@@ -600,7 +591,9 @@ function renderGrid() {
         const card = document.createElement('div');
         card.className = 'project-card';
 
-        const toolsHtml  = project.tools.map(t => `<span class="card-tag">${t}</span>`).join('');
+        // Filter out DAX, SQL, Python tags from card tags
+        const visibleTools = project.tools.filter(t => !['dax', 'sql', 'python', 'sql server'].includes(t.toLowerCase()));
+        const toolsHtml = visibleTools.map(t => `<span class="card-tag">${t}</span>`).join('');
         const githubBtn  = project.githubUrl
             ? `<a href="${project.githubUrl}" target="_blank" class="btn btn-secondary btn-sm" title="View on GitHub">
                    <i class="fab fa-github"></i> Git Repo
@@ -670,10 +663,6 @@ function openReviewerModal(projectId) {
 
     // Impact
     document.getElementById('modalImpactText').innerText = project.businessImpact || 'Measurable operational impact achieved.';
-
-    // Code
-    document.getElementById('modalDaxCode').innerText = project.daxCode || '// No DAX calculations specified.';
-    document.getElementById('modalSqlCode').innerText = project.sqlCode || '-- No SQL queries specified.';
 
     // Files
     const filesList = document.getElementById('modalFilesList');
