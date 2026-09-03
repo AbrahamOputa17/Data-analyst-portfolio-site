@@ -729,35 +729,73 @@ function showToast(message) {
 
 // ─── Event Listeners ──────────────────────────────────────────────────────────
 function initEventListeners() {
-    searchInput.addEventListener('input', e => {
-        searchQuery = e.target.value;
-        clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
-        renderGrid();
-    });
-    clearSearchBtn.addEventListener('click', () => {
-        searchInput.value = searchQuery = '';
-        clearSearchBtn.style.display = 'none';
-        renderGrid();
-    });
+    const headerSearchInput = document.getElementById('headerSearchInput');
 
-    filterTagsContainer.querySelectorAll('.filter-btn').forEach(btn =>
-        btn.addEventListener('click', () => {
-            filterTagsContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            activeFilter = btn.dataset.filter;
+    const handleSearchInput = (val) => {
+        searchQuery = val;
+        if (searchInput && searchInput !== document.activeElement) searchInput.value = val;
+        if (headerSearchInput && headerSearchInput !== document.activeElement) headerSearchInput.value = val;
+        if (clearSearchBtn) clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
+        renderGrid();
+    };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', e => handleSearchInput(e.target.value));
+    }
+    if (headerSearchInput) {
+        headerSearchInput.addEventListener('input', e => handleSearchInput(e.target.value));
+    }
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            handleSearchInput('');
+        });
+    }
+
+    // Sidebar Category Items
+    const sidebarNav = document.getElementById('sidebarNav');
+    if (sidebarNav) {
+        sidebarNav.querySelectorAll('.sidebar-nav-item').forEach(item => {
+            item.addEventListener('click', e => {
+                e.preventDefault();
+                sidebarNav.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                activeFilter = item.dataset.filter || 'all';
+                renderGrid();
+            });
+        });
+    }
+
+    if (filterTagsContainer) {
+        filterTagsContainer.querySelectorAll('.filter-btn').forEach(btn =>
+            btn.addEventListener('click', () => {
+                filterTagsContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.dataset.filter;
+                renderGrid();
+            })
+        );
+    }
+
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener('click', () => {
+            activeFilter = 'all';
+            handleSearchInput('');
+            if (sidebarNav) {
+                sidebarNav.querySelectorAll('.sidebar-nav-item').forEach(i =>
+                    i.classList.toggle('active', (i.dataset.filter || 'all') === 'all'));
+            }
+            if (filterTagsContainer) {
+                filterTagsContainer.querySelectorAll('.filter-btn').forEach(b =>
+                    b.classList.toggle('active', b.dataset.filter === 'all'));
+            }
             renderGrid();
-        })
-    );
+        });
+    }
 
-    document.getElementById('resetFiltersBtn').addEventListener('click', () => {
-        activeFilter = 'all'; searchQuery = ''; searchInput.value = '';
-        clearSearchBtn.style.display = 'none';
-        filterTagsContainer.querySelectorAll('.filter-btn').forEach(b =>
-            b.classList.toggle('active', b.dataset.filter === 'all'));
-        renderGrid();
-    });
-
-    document.getElementById('closeReviewerModal').addEventListener('click', () => reviewerModal.style.display = 'none');
+    const closeBtn = document.getElementById('closeReviewerModal');
+    if (closeBtn) closeBtn.addEventListener('click', () => reviewerModal.style.display = 'none');
 
     window.addEventListener('click', e => {
         if (e.target === reviewerModal) reviewerModal.style.display = 'none';
@@ -768,13 +806,22 @@ function initEventListeners() {
 
     document.querySelectorAll('.btn-copy').forEach(btn =>
         btn.addEventListener('click', () => {
-            navigator.clipboard.writeText(document.getElementById(btn.dataset.target).innerText);
-            showToast('Code copied to clipboard!');
+            const targetEl = document.getElementById(btn.dataset.target);
+            if (targetEl) {
+                navigator.clipboard.writeText(targetEl.innerText);
+                showToast('Code copied to clipboard!');
+            }
         })
     );
 
-    document.getElementById('toggleFullscreenBtn').addEventListener('click', () => {
-        const c = document.getElementById('iframeContainer');
-        document.fullscreenElement ? document.exitFullscreen() : c.requestFullscreen();
-    });
+    const toggleFullscreenBtn = document.getElementById('toggleFullscreenBtn');
+    if (toggleFullscreenBtn) {
+        toggleFullscreenBtn.addEventListener('click', () => {
+            const c = document.getElementById('iframeContainer');
+            if (c) {
+                document.fullscreenElement ? document.exitFullscreen() : c.requestFullscreen();
+            }
+        });
+    }
 }
+

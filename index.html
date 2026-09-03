@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abraham Oputa | Data Analytics & Power BI Reviewer Hub</title>
-    <meta name="description" content="Interactive Data Analytics Portfolio & Power BI Reviewer Hub showcasing Power BI dashboards, DAX measures, SQL queries, business insights, and datasets by Abraham Oputa.">
+    <title>Abraham Oputa | Power BI & Data Analytics Docs Hub</title>
+    <meta name="description" content="Claude Docs-inspired interactive Data Analytics & Power BI Reviewer Hub showcasing dashboards, DAX measures, SQL queries, and datasets by Abraham Oputa.">
     <meta name="keywords" content="Data Analytics, Power BI, DAX, SQL, Python, Dashboard, Portfolio, Abraham Oputa, Business Intelligence">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,241 +18,271 @@
     <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Custom CSS -->
+    <!-- Custom CSS (Claude Code Docs Aesthetic) -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Background Matrix / Glow Elements -->
+    <!-- Ambient Glows & Tech Grid -->
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
     <div class="grid-overlay"></div>
 
-    <!-- Navigation Header -->
+    <!-- Sticky Navigation Header -->
     <header class="app-header">
         <div class="nav-container">
             <a href="#" class="brand-logo">
-                <div class="logo-badge"><i class="fas fa-chart-pie"></i></div>
+                <div class="logo-badge"><img src="assets/logo.svg" alt="Abraham Oputa Logo" class="brand-logo-img"></div>
                 <div class="brand-text">
                     <span class="brand-name">ABRAHAM OPUTA</span>
-                    <span class="brand-sub">POWER BI & ANALYTICS HUB</span>
+                    <span class="brand-sub">POWER BI DOCS HUB <span class="doc-version-badge">v2.4</span></span>
                 </div>
             </a>
 
+            <div class="header-search">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="headerSearchInput" placeholder="Quick search docs & datasets..." autocomplete="off">
+            </div>
 
+            <div class="header-actions">
+                <a href="https://linkedin.com/in/abraham-oputa-87627b260" target="_blank" class="btn btn-secondary btn-sm"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/AbrahamOputa17/Data-analysis-Portfolio" target="_blank" class="btn btn-primary btn-sm"><i class="fab fa-github"></i> GitHub Repo</a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-container">
-            <div class="hero-badge">
-                <span class="pulse-dot"></span> LIVE DATA ANALYTICS & POWER BI HUB
-            </div>
-            <h1 class="hero-title">
-                Transforming Raw Data Into <span class="gradient-text">Interactive Intelligence</span>
-            </h1>
-            <p class="hero-subtitle">
-                Explore end-to-end Data Science &amp; Business Intelligence projects. Review interactive <strong>Power BI dashboards</strong>, examine business problem statements, and download project datasets.
-            </p>
+    <!-- Claude Code Docs Layout Workspace -->
+    <div class="doc-layout">
 
-            <!-- Metrics Strip -->
-            <div class="metrics-strip">
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="metric-data">
-                        <span class="metric-value" id="statProjects">0</span>
-                        <span class="metric-label">Power BI Dashboards</span>
+        <!-- Left Sidebar Navigation -->
+        <aside class="doc-sidebar">
+            <div class="sidebar-group">
+                <div class="sidebar-group-title">
+                    <span><i class="fas fa-book"></i> Documentation Index</span>
+                    <span class="sidebar-badge" id="statProjects">13</span>
+                </div>
+                <ul class="sidebar-nav-list" id="sidebarNav">
+                    <li><a href="#" class="sidebar-nav-item active" data-filter="all"><span><i class="fas fa-border-all"></i> All Projects</span> <span class="sidebar-badge">13</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="Power BI"><span><i class="fas fa-chart-pie"></i> Power BI Dashboards</span> <span class="sidebar-badge">13</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="Financial"><span><i class="fas fa-wallet"></i> Financial Analytics</span> <span class="sidebar-badge">2</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="E-Commerce"><span><i class="fas fa-shopping-cart"></i> E-Commerce</span> <span class="sidebar-badge">3</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="Retail"><span><i class="fas fa-store"></i> Retail Analytics</span> <span class="sidebar-badge">2</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="Sales"><span><i class="fas fa-chart-line"></i> Sales & Operations</span> <span class="sidebar-badge">2</span></a></li>
+                    <li><a href="#" class="sidebar-nav-item" data-filter="Public Safety"><span><i class="fas fa-shield-alt"></i> Safety & Industry</span> <span class="sidebar-badge">3</span></a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-group">
+                <div class="sidebar-group-title"><span><i class="fas fa-code"></i> Resources & Spec</span></div>
+                <ul class="sidebar-nav-list">
+                    <li><a href="https://github.com/AbrahamOputa17/Data-analysis-Portfolio" target="_blank" class="sidebar-nav-item"><span><i class="fab fa-github"></i> Repository (.PBIX)</span></a></li>
+                    <li><a href="https://linkedin.com/in/abraham-oputa-87627b260" target="_blank" class="sidebar-nav-item"><span><i class="fab fa-linkedin"></i> Contact & Connect</span></a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Center Documentation Main Workspace -->
+        <main class="doc-main">
+
+            <!-- Terminal Hero Banner -->
+            <section class="terminal-hero" id="overview">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <div class="terminal-title">claude-code-docs — bash — 80x24</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-command">
+                        <span class="terminal-prompt">$</span> claude --load "abraham-oputa-portfolio" --format "docs"
+                    </div>
+                    <h1 class="hero-main-title">
+                        Data Intelligence &amp; <span class="gradient-text">Power BI Documentation Hub</span>
+                    </h1>
+                    <p class="hero-description">
+                        Explore end-to-end Data Science &amp; Business Intelligence projects. Review interactive <strong>Power BI dashboards</strong>, examine business problem statements, inspect DAX &amp; SQL measures, and download verifiable datasets.
+                    </p>
+
+                    <!-- Metrics Overview Strip -->
+                    <div class="metrics-strip">
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-cubes"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-value">13</span>
+                                <span class="metric-label">Production Dashboards</span>
+                            </div>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-database"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-value">100%</span>
+                                <span class="metric-label">Verifiable GitHub Source</span>
+                            </div>
+                        </div>
+                        <div class="metric-divider"></div>
+                        <div class="metric-card">
+                            <div class="metric-icon"><i class="fas fa-check-double"></i></div>
+                            <div class="metric-data">
+                                <span class="metric-value">DAX / SQL</span>
+                                <span class="metric-label">Documented Measures</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="metric-divider"></div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-database"></i></div>
-                    <div class="metric-data">
-                        <span class="metric-value" id="statDatasets">100%</span>
-                        <span class="metric-label">Documented &amp; Verifiable</span>
-                    </div>
+            </section>
+
+            <!-- Search & Toolbar -->
+            <section class="toolbar-section" id="projects">
+                <div class="header-search search-box" style="width: 100%; margin-bottom: 16px;">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search by title, domain, tools, or problem statement..." autocomplete="off">
+                    <button class="clear-search" id="clearSearchBtn" style="display: none;"><i class="fas fa-times"></i></button>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Controls & Filter Toolbar -->
-    <section class="toolbar-section">
-        <div class="toolbar-container">
-            <!-- Search Bar -->
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Search by dashboard title, category, or business domain..." autocomplete="off">
-                <button class="clear-search" id="clearSearchBtn" style="display: none;"><i class="fas fa-times"></i></button>
-            </div>
+                <div class="filter-tags" id="filterTags" style="display: none;">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="Power BI">Power BI</button>
+                    <button class="filter-btn" data-filter="Financial">Finance</button>
+                    <button class="filter-btn" data-filter="E-Commerce">E-Commerce</button>
+                    <button class="filter-btn" data-filter="Retail">Retail</button>
+                    <button class="filter-btn" data-filter="Sales">Sales</button>
+                    <button class="filter-btn" data-filter="Public Safety">Safety</button>
+                </div>
+            </section>
 
-            <!-- Filter Tags -->
-            <div class="filter-tags" id="filterTags">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="Power BI">Power BI</button>
-                <button class="filter-btn" data-filter="Financial">Finance</button>
-                <button class="filter-btn" data-filter="E-Commerce">E-Commerce</button>
-                <button class="filter-btn" data-filter="Retail">Retail</button>
-                <button class="filter-btn" data-filter="Sales">Sales</button>
-                <button class="filter-btn" data-filter="Public Safety">Safety</button>
-            </div>
-        </div>
-    </section>
+            <!-- Projects Grid Section -->
+            <section class="projects-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-folder-open"></i> Featured Analytics Projects</h2>
+                    <span class="project-count" id="projectCountText">Showing all projects</span>
+                </div>
 
-    <!-- Main Showcase Grid -->
-    <main class="main-content">
-        <div class="grid-header">
-            <h2 class="grid-title">Featured Analytics Projects</h2>
-            <span class="project-count" id="projectCountText">Showing all projects</span>
-        </div>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Dynamic project cards rendered via app.js -->
+                </div>
 
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Cards populated dynamically via app.js -->
-        </div>
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon"><i class="fas fa-search"></i></div>
+                    <h3>No Documentation Entry Found</h3>
+                    <p class="text-sub">Try adjusting your query or resetting category filters.</p>
+                    <button class="btn btn-outline mt-3" id="resetFiltersBtn"><i class="fas fa-redo"></i> Reset Filters</button>
+                </div>
+            </section>
 
-        <!-- Empty state placeholder -->
-        <div class="empty-state" id="emptyState" style="display: none;">
-            <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
-            <h3>No Projects Match Your Search</h3>
-            <p>Try clearing your search query or selecting a different tool filter.</p>
-            <button class="btn btn-outline" id="resetFiltersBtn">Reset Filters</button>
-        </div>
-    </main>
+        </main>
+
+        <!-- Right Side TOC Navigation -->
+        <aside class="doc-toc">
+            <div class="toc-title">On This Page</div>
+            <ul class="toc-list">
+                <li class="toc-item"><a href="#overview"><i class="fas fa-chevron-right"></i> Overview &amp; CLI</a></li>
+                <li class="toc-item"><a href="#projects"><i class="fas fa-chevron-right"></i> Featured Projects</a></li>
+            </ul>
+        </aside>
+
+    </div>
 
     <!-- Footer -->
     <footer class="app-footer">
         <div class="footer-container">
             <div class="footer-info">
-                <div class="footer-logo">AO<span>.</span>ANALYTICS</div>
-                <p>Designed & Developed by Abraham Oputa — Data Scientist & Intelligence Architect</p>
+                <div class="footer-logo"><img src="assets/logo.svg" alt="Abraham Oputa Logo" class="footer-logo-img"> AO<span>.</span>DOCS HUB</div>
+                <p>Designed &amp; Developed by Abraham Oputa — Data Scientist &amp; Intelligence Architect</p>
             </div>
             <div class="footer-links">
-                <a href="https://www.linkedin.com/in/abraham-oputa-87627b260" target="_blank" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://linkedin.com/in/abraham-oputa-87627b260" target="_blank" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 <a href="https://github.com/AbrahamOputa17/Data-analysis-Portfolio" target="_blank" class="social-link"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </div>
     </footer>
 
-
-    <!-- ========================================== -->
-    <!-- MODAL 1: PROJECT REVIEWER & POWER BI VIEWER -->
-    <!-- ========================================== -->
+    <!-- MODAL: PROJECT REVIEWER & DOC VIEWER -->
     <div class="modal-overlay" id="reviewerModal" style="display: none;">
-        <div class="modal-container reviewer-container">
-            
-            <!-- Modal Header -->
+        <div class="modal-container">
             <div class="modal-header">
                 <div class="modal-title-group">
                     <span class="badge badge-neon" id="modalCategory">Category</span>
                     <h2 class="modal-project-title" id="modalTitle">Project Title</h2>
                 </div>
-                <div class="modal-header-actions">
-                    <button class="modal-close" id="closeReviewerModal"><i class="fas fa-times"></i></button>
-                </div>
+                <button class="modal-close" id="closeReviewerModal"><i class="fas fa-times"></i></button>
             </div>
 
-            <!-- Modal Navigation Tabs -->
             <div class="modal-tabs">
                 <button class="tab-btn active" data-tab="tab-dashboard">
-                    <i class="fas fa-desktop"></i> Power BI Dashboard
+                    <i class="fas fa-desktop"></i> Dashboard View
                 </button>
                 <button class="tab-btn" data-tab="tab-summary">
                     <i class="fas fa-file-alt"></i> Executive Brief
                 </button>
                 <button class="tab-btn" data-tab="tab-files">
-                    <i class="fas fa-folder"></i> Datasets &amp; Files
+                    <i class="fas fa-folder"></i> Files &amp; Datasets
                 </button>
             </div>
 
-            <!-- Modal Body Content -->
             <div class="modal-body">
-
-                <!-- TAB 1: POWER BI DASHBOARD VIEWER -->
                 <div class="tab-content active" id="tab-dashboard">
                     <div class="dashboard-viewer-wrapper">
-                        <!-- Toolbar -->
                         <div class="viewer-toolbar">
                             <div class="viewer-status">
                                 <span class="status-indicator"></span>
-                                <span id="viewerStatusText">Interactive Report View</span>
+                                <span id="viewerStatusText">Report Preview</span>
                             </div>
-                            <div class="viewer-actions">
-                                <button class="btn btn-xs btn-secondary" id="toggleFullscreenBtn">
-                                    <i class="fas fa-expand"></i> Fullscreen
-                                </button>
-                            </div>
+                            <button class="btn btn-xs btn-secondary" id="toggleFullscreenBtn">
+                                <i class="fas fa-expand"></i> Fullscreen
+                            </button>
                         </div>
 
-                        <!-- Iframe or Preview Image Container -->
                         <div class="iframe-container" id="iframeContainer">
                             <div class="iframe-placeholder" id="iframePlaceholder">
                                 <img src="" alt="Power BI Dashboard" id="modalPreviewImg">
                                 <div class="iframe-overlay">
                                     <div class="overlay-badge"><i class="fas fa-chart-bar"></i> Power BI Overview</div>
-                                    <h3>Dashboard Screenshot Preview</h3>
-                                    <p>View the project details, DAX &amp; SQL code, and downloadable files using the tabs above.</p>
+                                    <h3>Dashboard Preview</h3>
+                                    <p>Examine business insights, DAX metrics, and downloadable files via the tabs above.</p>
                                 </div>
                             </div>
-                            <iframe id="powerBiIframe" src="" frameborder="0" allowFullScreen="true" style="display: none;"></iframe>
+                            <iframe id="powerBiIframe" src="" frameborder="0" style="display: none;"></iframe>
                         </div>
 
-                        <!-- Quick KPI Highlights -->
-                        <div class="quick-kpis" id="modalQuickKpis">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <div class="quick-kpis" id="modalQuickKpis"></div>
                     </div>
                 </div>
 
-                <!-- TAB 2: EXECUTIVE BRIEF & INSIGHTS -->
                 <div class="tab-content" id="tab-summary">
                     <div class="doc-section">
-                        <h3><i class="fas fa-bullseye"></i> Executive Problem Statement & Context</h3>
-                        <div class="doc-box" id="modalProblemText">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <h3><i class="fas fa-bullseye"></i> Problem Statement</h3>
+                        <div class="doc-box" id="modalProblemText"></div>
                     </div>
 
                     <div class="doc-section mt-4">
-                        <h3><i class="fas fa-lightbulb"></i> Key Actionable Business Insights</h3>
-                        <div class="insights-grid" id="modalInsightsList">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <h3><i class="fas fa-lightbulb"></i> Actionable Insights</h3>
+                        <div class="insights-grid" id="modalInsightsList"></div>
                     </div>
 
                     <div class="doc-section mt-4">
-                        <h3><i class="fas fa-cogs"></i> Business Impact & ROI</h3>
-                        <div class="doc-box highlighted-box" id="modalImpactText">
-                            <!-- Populated dynamically -->
-                        </div>
+                        <h3><i class="fas fa-cogs"></i> Business Impact</h3>
+                        <div class="doc-box" id="modalImpactText"></div>
                     </div>
                 </div>
 
-                <!-- TAB 4: DATASETS & FILES -->
                 <div class="tab-content" id="tab-files">
-                    <div class="files-container">
-                        <h3><i class="fas fa-paperclip"></i> Project Files & Downloads</h3>
-                        <div class="file-links-grid" id="modalFilesList">
-                            <!-- Populated dynamically -->
-                        </div>
-
-                        <h3 class="mt-4"><i class="fas fa-table"></i> Sample Data Table Preview</h3>
-                        <div class="table-preview-wrapper" id="modalTableWrapper">
-                            <!-- Populated dynamically -->
-                        </div>
+                    <div class="doc-section">
+                        <h3><i class="fas fa-paperclip"></i> Project Links</h3>
+                        <div class="file-links-grid" id="modalFilesList"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-
-
     <!-- Notification Toast -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" id="toastIcon"></i>
-        <span id="toastMessage">Action completed successfully</span>
+        <span id="toastMessage">Notification</span>
     </div>
 
     <!-- Application Script -->
